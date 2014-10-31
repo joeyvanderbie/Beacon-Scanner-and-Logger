@@ -1,6 +1,8 @@
 Beacon Scanner & Logger
 =======================
 
+*** Note that the app's development environment has been migrated from Eclipse to Android Studio, the Eclipse folder contains artefacts from versions 1.3 and earlier, version 1.4 onwards can be found in the Android Studio folder ***
+
 This Android app detects BLE Beacons and logs data to a file for some unspecified future use.
 
 The app scans for Beacons and writes the details of any Beacons discovered to a file on the device. The app features functionality to select which properies should be logged and to email files from the device to an email address of the user's choice.
