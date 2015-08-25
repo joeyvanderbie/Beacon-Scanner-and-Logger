@@ -6,7 +6,7 @@ package net.jmodwyer.beacon.beaconPoC;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 import android.os.Environment;
@@ -17,7 +17,7 @@ import android.text.format.DateFormat;
  */
 public class FileHelper {
 
-	private OutputStreamWriter osw;
+	private FileWriter osw;
 	private File extStorage;
 	private final String FILENAME_PREFIX = "beacons";
 
@@ -34,22 +34,36 @@ public class FileHelper {
 	 * @param fileData String representing the data we want to write to a file.
 	 */
 	public void createFile(String fileData) {
-		try 
-		{    
-			if (isExternalStorageAvailableAndWriteable()) {	
-				String now = (DateFormat.format("dd-MM-yyyy_HH-mm-ss", new java.util.Date()).toString());
-				File file = new File(extStorage, FILENAME_PREFIX + "_" + now);                                
-				FileOutputStream fos = new FileOutputStream(file);
-				osw = new OutputStreamWriter(fos);
-				osw.write(fileData);
-				osw.flush();
-				osw.close();
-			}
-		} 
-		catch (IOException ioe) { 
-			ioe.printStackTrace(); 
-		}
+		createFile(fileData, null);
 	}
+
+    /**
+     * Create a file using the String passed in as content.
+     * @param fileData String representing the data we want to write to a file.Ø
+     * @param fileName String representing the name of the file to be created, default name will be
+     *                 used if fileName is null.
+     */
+    public void createFile(String fileData, String fileName) {
+        try
+        {
+            File file;
+            if (isExternalStorageAvailableAndWriteable()) {
+                if (fileName != null) {
+                    file = new File(extStorage, fileName);
+                } else {
+                    String now = (DateFormat.format("dd-MM-yyyy_HH-mm-ss", new java.util.Date()).toString());
+                    file = new File(extStorage, FILENAME_PREFIX + "_" + now);
+                }
+                osw = new FileWriter(file);
+                osw.write(fileData);
+                osw.flush();
+                osw.close();
+            }
+        }
+        catch (IOException ioe) {
+            ioe.printStackTrace();
+        }
+    }
 
 	/**
 	 * Delete the file referenced by the path passed in.

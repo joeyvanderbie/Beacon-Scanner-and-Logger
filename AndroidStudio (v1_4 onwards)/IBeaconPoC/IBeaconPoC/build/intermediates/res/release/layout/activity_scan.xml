@@ -48,4 +48,4 @@
         android:layout_centerHorizontal="true"
         android:onClick="onScanButtonClicked" />
     
-</RelativeLayout><!-- From: file:/Users/justin/AndroidstudioProjects/IBeaconPoC/IBeaconPoC/src/main/res/layout/activity_scan.xml -->
+</RelativeLayout><!-- From: file:/Users/justin/Repository/Beacon-Scanner-and-Logger/AndroidStudio%20(v1_4%20onwards)/IBeaconPoC/IBeaconPoC/src/main/res/layout/activity_scan.xml -->

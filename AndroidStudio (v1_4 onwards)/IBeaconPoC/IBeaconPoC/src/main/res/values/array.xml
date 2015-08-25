@@ -1,6 +1,7 @@
 <resources>
   
     <string-array name="IntervalLabels">
+        <item>1 second</item>
 	    <item>5 seconds</item>
 	    <item>10 seconds</item>
 	    <item>30 seconds</item>
@@ -12,6 +13,7 @@
     </string-array>
     
 	<string-array name="IntervalValues">
+        <item>1000</item>
 	    <item>5000</item>
 	    <item>10000</item>
 	    <item>30000</item>

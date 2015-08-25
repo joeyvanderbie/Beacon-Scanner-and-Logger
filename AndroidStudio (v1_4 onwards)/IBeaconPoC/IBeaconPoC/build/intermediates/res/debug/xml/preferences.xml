@@ -70,7 +70,13 @@
             android:key="timestamp"
             android:summary="Log a Timestamp every time a beacon is detected"
             android:title="Timestamp" />
-                                        
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="realTimeLog"
+            android:summary="Log each beacon detected to a file in real time (file will only ever contain a single entry)."
+            android:title="Realtime Logging" />
+
     </PreferenceCategory>
 
 </PreferenceScreen><!-- From: file:/Users/justin/Repository/Beacon-Scanner-and-Logger/AndroidStudio%20(v1_4%20onwards)/IBeaconPoC/IBeaconPoC/src/main/res/xml/preferences.xml -->

@@ -1,7 +1,8 @@
 apply plugin: 'com.android.application'
 
 repositories {
-    mavenCentral()
+    jcenter()
+    //mavenCentral()
     flatDir {
         dirs 'libs'
     }
@@ -19,14 +20,15 @@ android {
 
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
         }
     }
 }
 
 dependencies {
     dependencies {
-        compile 'org.altbeacon:android-beacon-library:2+@aar'
+        compile 'org.altbeacon:android-beacon-library:2+'
+        // compile 'org.altbeacon:android-beacon-library:2+@aar'
     }
     compile project(':googleplayservices_lib')
     compile files('libs/android-support-v4.jar')

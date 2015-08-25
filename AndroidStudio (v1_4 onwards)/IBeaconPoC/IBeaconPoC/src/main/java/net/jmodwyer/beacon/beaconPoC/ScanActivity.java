@@ -58,6 +58,7 @@ public class ScanActivity extends Activity implements BeaconConsumer,
 	private static final String PREFERENCE_UUID = "uuid";
 	private static final String PREFERENCE_INDEX = "index";
     private static final String PREFERENCE_LOCATION = "location";
+    private static final String PREFERENCE_REALTIME = "realTimeLog";
     private static final String MODE_SCANNING = "Stop Scanning";
     private static final String MODE_STOPPED = "Start Scanning";
     protected static final String TAG = "ScanActivity";
@@ -87,6 +88,8 @@ public class ScanActivity extends Activity implements BeaconConsumer,
 	private Boolean power;
 	private Boolean timestamp;
 	private String scanInterval;
+    // Added following a feature request from D.Schmid.
+    private Boolean realTimeLog;
     
 	// LocationClient for Google Play Location Services
 	LocationClient locationClient;
@@ -104,7 +107,17 @@ public class ScanActivity extends Activity implements BeaconConsumer,
 		// Add parser for iBeacons;
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
-		beaconManager.bind(this);
+        // Detect the Eddystone main identifier (UID) frame:
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout("s:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19"));
+        // Detect the Eddystone telemetry (TLM) frame:
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout("x,s:0-1=feaa,m:2-2=20,d:3-3,d:4-5,d:6-7,d:8-11,d:12-15"));
+        // Detect the Eddystone URL frame:
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout("s:0-1=feaa,m:2-2=10,p:3-3:-41,i:4-20"));
+
+        beaconManager.bind(this);
 		
 		region = new Region("myRangingUniqueId", null, null, null);
 
@@ -206,6 +219,7 @@ public class ScanActivity extends Activity implements BeaconConsumer,
 		power = (Boolean)prefs.get(PREFERENCE_POWER);
 		timestamp = (Boolean)prefs.get(PREFERENCE_TIMESTAMP);
 		scanInterval = (String)prefs.get(PREFERENCE_SCANINTERVAL);
+        realTimeLog = (Boolean)prefs.get(PREFERENCE_REALTIME);
 		
 		// Get current background scan interval (if specified)
 		if (prefs.get(PREFERENCE_SCANINTERVAL) != null) {
@@ -316,6 +330,16 @@ public class ScanActivity extends Activity implements BeaconConsumer,
 	    
 		logToDisplay(scanString.toString());
 		scanString.append("\n");
+
+        // Code added following a feature request by D.Schmid - writes a single entry to a file
+        // every time a beacon is detected, the file will only ever have one entry as it will be
+        // recreated on each call to this method.
+        // Get current background scan interval (if specified)
+        if (realTimeLog) {
+            // We're in realtime logging mode, create a new log file containing only this entry.
+            fileHelper.createFile(scanString.toString(), "realtimelog.txt");
+        }
+
 		logString.append(scanString.toString());
 		
 	}
