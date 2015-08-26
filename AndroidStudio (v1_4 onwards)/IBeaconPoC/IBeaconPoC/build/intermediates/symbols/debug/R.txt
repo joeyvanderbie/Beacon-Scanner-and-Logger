@@ -93,10 +93,10 @@ int drawable ic_plusone_standard_off_client 0x7f02001e
 int drawable ic_plusone_tall_off_client 0x7f02001f
 int drawable powered_by_google_dark 0x7f020020
 int drawable powered_by_google_light 0x7f020021
-int id Settings 0x7f07001b
-int id action_deletefiles 0x7f070018
-int id action_listfiles 0x7f07001a
-int id action_transferfiles 0x7f070019
+int id Settings 0x7f07001c
+int id action_deletefiles 0x7f070019
+int id action_listfiles 0x7f07001b
+int id action_transferfiles 0x7f07001a
 int id book_now 0x7f070010
 int id buyButton 0x7f07000a
 int id buy_now 0x7f07000f
@@ -115,8 +115,9 @@ int id normal 0x7f070001
 int id production 0x7f070007
 int id sandbox 0x7f070008
 int id satellite 0x7f070002
-int id scanButton 0x7f070017
-int id scanText 0x7f070016
+int id scanButton 0x7f070016
+int id scanScrollView 0x7f070017
+int id scanText 0x7f070018
 int id selectionDetails 0x7f07000b
 int id strict_sandbox 0x7f070009
 int id terrain 0x7f070003

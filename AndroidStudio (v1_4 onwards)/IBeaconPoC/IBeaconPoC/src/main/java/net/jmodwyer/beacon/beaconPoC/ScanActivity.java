@@ -12,12 +12,14 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -91,6 +93,9 @@ public class ScanActivity extends Activity implements BeaconConsumer,
     
 	// LocationClient for Google Play Location Services
 	LocationClient locationClient;
+
+    private ScrollView scroller;
+    private EditText editText;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,14 +110,26 @@ public class ScanActivity extends Activity implements BeaconConsumer,
         beaconManager.bind(this);
         locationClient = new LocationClient(this, this, this);
         fileHelper = app.getFileHelper();
+        scroller = (ScrollView)ScanActivity.this.findViewById(R.id.scanScrollView);
+        editText = (EditText)ScanActivity.this.findViewById(R.id.scanText);
 		// Initialise scan button.
 		getScanButton().setText(MODE_STOPPED);
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        beaconManager.bind(this);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
-        beaconManager.unbind(this);
+        // Uncommenting the following leak prevents a ServiceConnection leak when using the back
+        // arrow in the Action Bar to come out of the file list screen. Unfortunately it also kills
+        // background scanning, and as I have no workaround right now I'm settling for the lesser of
+        // two evils.
+        // beaconManager.unbind(this);
     }
 
     public String getCurrentLocation() {
@@ -290,29 +307,21 @@ public class ScanActivity extends Activity implements BeaconConsumer,
 
             if (beacon.getBeaconTypeCode() == 0x00) {
 
-                scanString.append(" Eddystone-UID : ");
+                scanString.append(" Eddystone-UID -> ");
+                scanString.append(" Namespace : ").append(beacon.getId1());
+                scanString.append(" Identifier : ").append(beacon.getId2());
+
+                logEddystoneTelemetry(scanString, beacon);
 
             } else if (beacon.getBeaconTypeCode() == 0x10) {
-                
+
                 String url = UrlBeaconUrlCompressor.uncompress(beacon.getId1().toByteArray());
-                scanString.append(" Eddystone-URL : " + url);
+                scanString.append(" Eddystone-URL -> " + url);
 
             } else if (beacon.getBeaconTypeCode() == 0x20) {
 
-                scanString.append(" Eddystone-TLM : ");
-                // Do we have telemetry data?
-                if (beacon.getExtraDataFields().size() > 0) {
-                    long telemetryVersion = beacon.getExtraDataFields().get(0);
-                    long batteryMilliVolts = beacon.getExtraDataFields().get(1);
-                    long pduCount = beacon.getExtraDataFields().get(3);
-                    long uptime = beacon.getExtraDataFields().get(4);
-
-                    scanString.append(" Telemetry version : " + telemetryVersion);
-                    scanString.append(" Uptime (sec) : " + uptime);
-                    scanString.append(" Battery level (mv) " + batteryMilliVolts);
-                    scanString.append(" Tx count: " + pduCount);
-
-                }
+                scanString.append(" Eddystone-TLM -> ");
+                logEddystoneTelemetry(scanString, beacon);
 
             }
 
@@ -379,6 +388,21 @@ public class ScanActivity extends Activity implements BeaconConsumer,
         }
     }
 
+    private void logEddystoneTelemetry(StringBuilder scanString, Beacon beacon) {
+        // Do we have telemetry data?
+        if (beacon.getExtraDataFields().size() > 0) {
+            long telemetryVersion = beacon.getExtraDataFields().get(0);
+            long batteryMilliVolts = beacon.getExtraDataFields().get(1);
+            long pduCount = beacon.getExtraDataFields().get(3);
+            long uptime = beacon.getExtraDataFields().get(4);
+
+            scanString.append(" Telemetry version : " + telemetryVersion);
+            scanString.append(" Uptime (sec) : " + uptime);
+            scanString.append(" Battery level (mv) " + batteryMilliVolts);
+            scanString.append(" Tx count: " + pduCount);
+        }
+    }
+
 	/**
 	 * 
 	 * @param line
@@ -386,9 +410,15 @@ public class ScanActivity extends Activity implements BeaconConsumer,
     private void logToDisplay(final String line) {
     	runOnUiThread(new Runnable() {
     	    public void run() {
-    	    	EditText editText = (EditText)ScanActivity.this
-    					.findViewById(R.id.scanText);
-    	    	editText.append(line+"\n");            	
+
+    	    	editText.append(line + "\n");
+
+                // Temp code - don't really want to do this for every line logged, will look for a
+                // workaround.
+                Linkify.addLinks(editText, Linkify.WEB_URLS);
+
+                scroller.fullScroll(View.FOCUS_DOWN);
+
     	    }
     	});
     }
