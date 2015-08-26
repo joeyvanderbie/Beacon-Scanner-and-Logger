@@ -1,10 +1,5 @@
 package net.jmodwyer.beacon.beaconPoC;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import net.jmodwyer.ibeacon.ibeaconPoC.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +16,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import net.jmodwyer.ibeacon.ibeaconPoC.R;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Handles the listing of files and allows the user to select files for deletion and/or e-mailing.

@@ -1,9 +1,11 @@
 package net.jmodwyer.beacon.beaconPoC;
 
-import org.altbeacon.beacon.BeaconManager;
-import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
-
 import android.app.Application;
+
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.Region;
+import org.altbeacon.beacon.powersave.BackgroundPowerSaver;
 
 public class BeaconScannerApp extends Application {
 
@@ -13,10 +15,7 @@ public class BeaconScannerApp extends Application {
 	private FileHelper fileHelper;
 	private BackgroundPowerSaver backgroundPowerSaver;
 	private BeaconManager beaconManager;
-	
-	public BeaconManager getBeaconManager() {
-		return beaconManager;
-	}
+	private Region region;
 
 	@Override
 	public void onCreate() {
@@ -25,13 +24,37 @@ public class BeaconScannerApp extends Application {
 		// Allow scanning to continue in the background.
 		backgroundPowerSaver = new BackgroundPowerSaver(this);
 		beaconManager = BeaconManager.getInstanceForApplication(this);
+
+
+		BeaconScannerApp app = this;//(BeaconScannerApp)this.getApplication();
+		//beaconManager = app.getBeaconManager();
+		//beaconManager.setForegroundScanPeriod(10);
+
+		// logToDisplay("BeaconParsers size is:" + beaconManager.getBeaconParsers().size());
+
+        // Add parser for iBeacons;
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
+        // Detect the Eddystone main identifier (UID) frame:
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout("s:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19"));
+        // Detect the Eddystone telemetry (TLM) frame:
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout("x,s:0-1=feaa,m:2-2=20,d:3-3,d:4-5,d:6-7,d:8-11,d:12-15"));
+        // Detect the Eddystone URL frame:
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout("s:0-1=feaa,m:2-2=10,p:3-3:-41,i:4-20"));
+
+        // We only need to do the following once per application lifetime.
+        //beaconManager.bind(this);
+
+		region = new Region("myRangingUniqueId", null, null, null);
 	}
-	
-	/**
-	 * 
-	 */
-	public FileHelper getFileHelper() {
-		return this.fileHelper;
-	}
+
+	public FileHelper getFileHelper() { return fileHelper; }
+    public BeaconManager getBeaconManager() {
+        return beaconManager;
+    }
+    public Region getRegion() {return region; }
 
 }

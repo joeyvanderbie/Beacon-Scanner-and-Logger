@@ -12,7 +12,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 
 import net.jmodwyer.ibeacon.ibeaconPoC.R;
@@ -31,7 +29,6 @@ import net.jmodwyer.ibeacon.ibeaconPoC.R;
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
-import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
@@ -72,7 +69,7 @@ public class ScanActivity extends Activity implements BeaconConsumer,
 
     private FileHelper fileHelper; 
     private BeaconManager beaconManager;
-    private Region region; 
+    private Region region;
     private int eventNum = 1;
     
     // This StringBuffer will hold the scan data for any given scan.  
@@ -103,29 +100,12 @@ public class ScanActivity extends Activity implements BeaconConsumer,
 		BeaconScannerApp app = (BeaconScannerApp)this.getApplication();
 		beaconManager = app.getBeaconManager();
 		//beaconManager.setForegroundScanPeriod(10);
-
-		// Add parser for iBeacons;
-        beaconManager.getBeaconParsers().add(new BeaconParser().
-                setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
-        // Detect the Eddystone main identifier (UID) frame:
-        beaconManager.getBeaconParsers().add(new BeaconParser().
-                setBeaconLayout("s:0-1=feaa,m:2-2=00,p:3-3:-41,i:4-13,i:14-19"));
-        // Detect the Eddystone telemetry (TLM) frame:
-        beaconManager.getBeaconParsers().add(new BeaconParser().
-                setBeaconLayout("x,s:0-1=feaa,m:2-2=20,d:3-3,d:4-5,d:6-7,d:8-11,d:12-15"));
-        // Detect the Eddystone URL frame:
-        beaconManager.getBeaconParsers().add(new BeaconParser().
-                setBeaconLayout("s:0-1=feaa,m:2-2=10,p:3-3:-41,i:4-20"));
-
+        region = app.getRegion();
         beaconManager.bind(this);
-		
-		region = new Region("myRangingUniqueId", null, null, null);
-
-		fileHelper = app.getFileHelper();
+        locationClient = new LocationClient(this, this, this);
+        fileHelper = app.getFileHelper();
 		// Initialise scan button.
 		getScanButton().setText(MODE_STOPPED);
-
-	    locationClient = new LocationClient(this, this, this);
     }
     
 
