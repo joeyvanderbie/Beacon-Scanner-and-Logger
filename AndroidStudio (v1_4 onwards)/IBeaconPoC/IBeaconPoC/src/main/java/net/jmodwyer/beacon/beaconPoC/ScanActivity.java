@@ -31,6 +31,7 @@ import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
+import org.altbeacon.beacon.utils.UrlBeaconUrlCompressor;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -107,7 +108,12 @@ public class ScanActivity extends Activity implements BeaconConsumer,
 		// Initialise scan button.
 		getScanButton().setText(MODE_STOPPED);
     }
-    
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        beaconManager.unbind(this);
+    }
 
     public String getCurrentLocation() {
         /** Default "error" value is set for location, will be overwritten with the correct lat and
@@ -215,13 +221,13 @@ public class ScanActivity extends Activity implements BeaconConsumer,
         beaconManager.setRangeNotifier(new RangeNotifier() {
         	@Override 
         	public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
-        		if (beacons.size() > 0) {
-        			Iterator <Beacon> beaconIterator = beacons.iterator();
-        			while (beaconIterator.hasNext()) {
-        				Beacon beacon = beaconIterator.next();
-        				logBeaconData(beacon);
-        			}
-        		}
+                if (beacons.size() > 0) {
+                    Iterator <Beacon> beaconIterator = beacons.iterator();
+                    while (beaconIterator.hasNext()) {
+                        Beacon beacon = beaconIterator.next();
+                        logBeaconData(beacon);
+                    }
+                }
         	}
         });
 
@@ -276,37 +282,46 @@ public class ScanActivity extends Activity implements BeaconConsumer,
 
 		StringBuilder scanString = new StringBuilder();
 
-		if (index) {
-			scanString.append(eventNum++);
-		}
-
-        if (location) {
-            scanString.append(" Location: ").append(getCurrentLocation()).append(" ");
+        if (index) {
+            scanString.append(eventNum++);
         }
 
-		if (uuid) {
-			scanString.append(" UUID: ").append(beacon.getId1());
-		}		
-		
-		if (majorMinor) {
-			scanString.append(" Maj. Mnr.: ").append(beacon.getId2()).append("-").append(beacon.getId3());
-		}
-		
-		if (rssi) {
-			scanString.append(" RSSI: ").append(beacon.getRssi());
-		}
-				
-		if (proximity) {
-			scanString.append(" Proximity: ").append(BeaconHelper.getProximityString(beacon.getDistance()));
-		}
-		
-		if (power) {
-			scanString.append(" Power: ").append(beacon.getTxPower());
-		}
-		
-		if (timestamp) {
-			scanString.append(" Timestamp: ").append(BeaconHelper.getCurrentTimeStamp());
-		}
+        if (beacon.getServiceUuid() == 0xfeaa) {
+
+            if (beacon.getBeaconTypeCode() == 0x00) {
+
+                scanString.append(" Eddystone-UID : ");
+
+            } else if (beacon.getBeaconTypeCode() == 0x10) {
+                
+                String url = UrlBeaconUrlCompressor.uncompress(beacon.getId1().toByteArray());
+                scanString.append(" Eddystone-URL : " + url);
+
+            } else if (beacon.getBeaconTypeCode() == 0x20) {
+
+                scanString.append(" Eddystone-TLM : ");
+                // Do we have telemetry data?
+                if (beacon.getExtraDataFields().size() > 0) {
+                    long telemetryVersion = beacon.getExtraDataFields().get(0);
+                    long batteryMilliVolts = beacon.getExtraDataFields().get(1);
+                    long pduCount = beacon.getExtraDataFields().get(3);
+                    long uptime = beacon.getExtraDataFields().get(4);
+
+                    scanString.append(" Telemetry version : " + telemetryVersion);
+                    scanString.append(" Uptime (sec) : " + uptime);
+                    scanString.append(" Battery level (mv) " + batteryMilliVolts);
+                    scanString.append(" Tx count: " + pduCount);
+
+                }
+
+            }
+
+        } else {
+
+            // Just an old fashioned iBeacon or AltBeacon...
+            logGenericBeacon(scanString, beacon);
+
+        }
 	    
 		logToDisplay(scanString.toString());
 		scanString.append("\n");
@@ -323,7 +338,47 @@ public class ScanActivity extends Activity implements BeaconConsumer,
 		logString.append(scanString.toString());
 		
 	}
-    
+
+    /**
+     * Logs iBeacon & AltBeacon data.
+     */
+    private void logGenericBeacon(StringBuilder scanString, Beacon beacon) {
+        if (location) {
+            scanString.append(" Location: ").append(getCurrentLocation()).append(" ");
+        }
+
+        if (uuid) {
+            scanString.append(" UUID: ").append(beacon.getId1());
+        }
+
+        if (majorMinor) {
+            scanString.append(" Maj. Mnr.: ");
+            if (beacon.getId2() != null) {
+                scanString.append(beacon.getId2());
+            }
+            scanString.append("-");
+            if (beacon.getId3() != null) {
+                scanString.append(beacon.getId3());
+            }
+        }
+
+        if (rssi) {
+            scanString.append(" RSSI: ").append(beacon.getRssi());
+        }
+
+        if (proximity) {
+            scanString.append(" Proximity: ").append(BeaconHelper.getProximityString(beacon.getDistance()));
+        }
+
+        if (power) {
+            scanString.append(" Power: ").append(beacon.getTxPower());
+        }
+
+        if (timestamp) {
+            scanString.append(" Timestamp: ").append(BeaconHelper.getCurrentTimeStamp());
+        }
+    }
+
 	/**
 	 * 
 	 * @param line
