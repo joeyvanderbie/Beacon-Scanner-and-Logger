@@ -118,10 +118,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ScanActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ScanActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/IBeaconPoC/src/main/java/net/jmodwyer/beacon/beaconPoC/ScanActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="16.929577">
+            <state vertical-scroll-proportion="0.0">
               <caret line="413" column="45" selection-start-line="413" selection-start-column="45" selection-end-line="413" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -137,11 +137,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/IBeaconPoC/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.84745765">
+              <caret line="51" column="60" selection-start-line="51" selection-start-column="60" selection-end-line="51" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/IBeaconPoC/src/main/java/net/jmodwyer/beacon/beaconPoC/FileHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="46" column="11" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="activity_scan.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/IBeaconPoC/src/main/res/layout/activity_scan.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.206897">
-              <caret line="57" column="17" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
+            <state vertical-scroll-proportion="-11.689655">
+              <caret line="47" column="36" selection-start-line="47" selection-start-column="36" selection-end-line="47" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -2108,11 +2128,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/IBeaconPoC/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/IBeaconPoC/src/main/java/net/jmodwyer/beacon/beaconPoC/FileHandlerActivity.java" />
         <option value="$PROJECT_DIR$/IBeaconPoC/src/main/java/net/jmodwyer/beacon/beaconPoC/BeaconScannerApp.java" />
-        <option value="$PROJECT_DIR$/IBeaconPoC/src/main/res/layout/activity_scan.xml" />
         <option value="$PROJECT_DIR$/IBeaconPoC/src/main/java/net/jmodwyer/beacon/beaconPoC/ScanActivity.java" />
+        <option value="$PROJECT_DIR$/IBeaconPoC/src/main/res/layout/activity_scan.xml" />
+        <option value="$PROJECT_DIR$/IBeaconPoC/src/main/AndroidManifest.xml" />
       </list>
     </option>
   </component>
@@ -2351,9 +2371,9 @@
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="SH4AWWM01239" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_4_API_21" />
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/IBeaconPoC" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Documents/releases/android/Ibeacon POC/1.5" />
     <property name="UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager2.WIDTH" value="272" />
-    <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/IBeaconPoC" />
+    <property name="ExportApk.ApkPath" value="$USER_HOME$/Documents/releases/android/Ibeacon POC/1.5" />
     <property name="ExportApk.Flavors" value="" />
     <property name="ExportApk.BuildType" value="release" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
@@ -2572,7 +2592,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3242009" sideWeight="0.40387723" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32267883" sideWeight="0.5961228" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41704717" sideWeight="0.72617126" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41856927" sideWeight="0.72617126" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.090468496" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24958949" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2847,14 +2867,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IBeaconPoC/src/main/java/net/jmodwyer/beacon/beaconPoC/FileHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.7707007">
-          <caret line="46" column="11" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/IBeaconPoC/src/main/res/values-v11/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2925,14 +2937,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IBeaconPoC/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3221957">
-          <caret line="9" column="62" selection-start-line="9" selection-start-column="62" selection-end-line="9" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/IBeaconPoC/src/main/java/net/jmodwyer/beacon/beaconPoC/FileHandlerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7653061">
@@ -2993,8 +2997,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/IBeaconPoC/src/main/res/layout/activity_scan.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.206897">
-          <caret line="57" column="17" selection-start-line="57" selection-start-column="17" selection-end-line="57" selection-end-column="17" />
+        <state vertical-scroll-proportion="-11.689655">
+          <caret line="47" column="36" selection-start-line="47" selection-start-column="36" selection-end-line="47" selection-end-column="36" />
           <folding />
         </state>
       </provider>
@@ -3002,9 +3006,17 @@
         <state />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/IBeaconPoC/src/main/java/net/jmodwyer/beacon/beaconPoC/FileHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="46" column="11" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/IBeaconPoC/src/main/java/net/jmodwyer/beacon/beaconPoC/ScanActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="16.929577">
+        <state vertical-scroll-proportion="0.0">
           <caret line="413" column="45" selection-start-line="413" selection-start-column="45" selection-end-line="413" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -3016,6 +3028,14 @@
             <element signature="e#9870#9871#0" expanded="true" />
             <element signature="e#9921#9922#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/IBeaconPoC/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.84745765">
+          <caret line="51" column="60" selection-start-line="51" selection-start-column="60" selection-end-line="51" selection-end-column="60" />
+          <folding />
         </state>
       </provider>
     </entry>

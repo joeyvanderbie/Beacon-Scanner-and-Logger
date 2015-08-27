@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
     tools:context=".ScanActivity" >
     
     <EditText
@@ -47,7 +46,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:autoText="false"
-            android:ems="10"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:inputType="textMultiLine"
