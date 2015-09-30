@@ -25,6 +25,10 @@ public class BeaconScannerApp extends Application {
 		backgroundPowerSaver = new BackgroundPowerSaver(this);
 		beaconManager = BeaconManager.getInstanceForApplication(this);
 
+//		// set the duration of the scan to be 1.1 seconds
+//		beaconManager.setBackgroundScanPeriod(2000l);
+//		// set the time between each scan to be 1 hour (3600 seconds)
+//		beaconManager.setBackgroundBetweenScanPeriod(5l);
 
 		BeaconScannerApp app = this;//(BeaconScannerApp)this.getApplication();
 		//beaconManager = app.getBeaconManager();

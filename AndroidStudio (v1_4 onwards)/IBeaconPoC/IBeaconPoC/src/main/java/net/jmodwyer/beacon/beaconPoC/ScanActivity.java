@@ -226,6 +226,9 @@ public class ScanActivity extends Activity implements BeaconConsumer,
 		
 		// Get current background scan interval (if specified)
 		if (prefs.get(PREFERENCE_SCANINTERVAL) != null) {
+            // set the duration of the scan to be 1.1 seconds
+            beaconManager.setBackgroundScanPeriod(2000l);
+            // set the time between each scan to be 1 hour (3600 seconds)
 			beaconManager.setBackgroundBetweenScanPeriod(Long.parseLong(scanInterval));
 		}
 		
@@ -470,12 +473,21 @@ public class ScanActivity extends Activity implements BeaconConsumer,
         locationClient.connect();
     }
 
+//    @Override
+//    protected void onStop() {
+//        // Disconnect the client.
+//        locationClient.disconnect();
+//        super.onStop();
+//    }
+
+
     @Override
-    protected void onStop() {
+    protected void onDestroy() {
         // Disconnect the client.
         locationClient.disconnect();
-        super.onStop();
+        super.onDestroy();
     }
+
 
     @Override
     public void onConnected(Bundle dataBundle) {
